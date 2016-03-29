@@ -185,7 +185,7 @@ parse_options_events(Events) ->
                 moved_to, moved_from, move_self, create, delete, delete_self,
                 unmount ],
     SEvents = lists:usort(Events),
-    case lists:filter(fun(E) -> lists:member(E, Allowed) end, SEvents) of
+    case lists:filter(fun(E) -> not lists:member(E, Allowed) end, SEvents) of
         [] -> string:join([ atom_to_list(E) || E <- SEvents ], ",");
         List ->
             error_logger:error_msg("Inotify events not supported: ~w~n", [ List ]),
